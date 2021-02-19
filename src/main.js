@@ -98,3 +98,12 @@ class Dealer {
         }
     }
 }
+
+class Player {
+    constructor() {
+        this.cash = 1000;
+        this.bet = 0;
+        this.chips = []
+    }
+}
+
