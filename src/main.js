@@ -47,5 +47,54 @@ class Deck {
     }
 }
 
-let deck = new Deck()
-deck.build()
+
+
+class Dealer {
+    constructor() {
+        this.hand = [];
+        this.secretCard = this.hand[0]
+    }
+    
+    start(deck, players) {
+        console.log('starting');
+
+        players.forEach(player => {
+            this.hit(deck, [player])
+        });
+        
+        players.forEach(player => {
+            this.hit(deck, [player])
+        });
+
+        console.log('ready to go');
+
+    }
+    
+    hit(deck, players) {  
+        players.forEach(player => {
+            let random = Math.floor(Math.random() * deck.cards.length);3
+            
+            player.hand.push(deck.cards[random])
+            deck.cards.splice(random, 1)
+        })
+        console.log('hit');      
+    }
+    
+    // stand() {
+    //     console.log('pass');
+    // } //does the dealer stand, or just finishes?
+    
+    verifyHand(player) {
+        let total = player.hand.reduce((acc, card) => {
+            return acc += card.value
+        }, 0)
+        
+        if (total === 21){
+            console.log('win');
+        } else if (total > 21) {
+            console.log('lose');
+        } else {
+            console.log('hit?');
+        }
+    }
+}
