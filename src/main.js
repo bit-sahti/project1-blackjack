@@ -52,38 +52,38 @@ class Deck {
 class Dealer {
     constructor() {
         this.hand = [];
-        this.secretCard = this.hand[0]
     }
     
     start(deck, players) {
         console.log('starting');
-
-        players.forEach(player => {
-            this.hit(deck, [player])
-        });
         
         players.forEach(player => {
-            this.hit(deck, [player])
-        });
+            this.hit(deck, player);
+        })
 
+        players[players.length - 1].getSecretCard()
+
+        players.forEach(player => {
+            this.hit(deck, player);
+        })
+        
         console.log('ready to go');
 
     }
     
-    hit(deck, players) {  
-        players.forEach(player => {
-            let random = Math.floor(Math.random() * deck.cards.length);3
+    hit(deck, player) {        
+        let random = Math.floor(Math.random() * deck.cards.length);
             
-            player.hand.push(deck.cards[random])
-            deck.cards.splice(random, 1)
-        })
+        player.hand.push(deck.cards[random])
+        deck.cards.splice(random, 1)
+    
         console.log('hit');      
     }
     
-    // stand() {
-    //     console.log('pass');
-    // } //does the dealer stand, or just finishes?
-    
+    getSecretCard() {
+        this.secretCard = this.hand[0]
+    }
+
     verifyHand(player) {
         let total = player.hand.reduce((acc, card) => {
             return acc += card.value
@@ -102,8 +102,14 @@ class Dealer {
 class Player {
     constructor() {
         this.cash = 1000;
+        // this.chipsValues = [25, 50, 100, 250, 500, 1000, 5000]
+        this.chips = [
+            {value: 25, quantity: 6},
+            {value: 50, quantity: 3},
+            {value: 100, quantity: 2},
+            {value: 250, quantity: 2},
+        ];
         this.bet = 0;
-        this.chips = []
-    }
+        this.hand = [];
+    }        
 }
-
