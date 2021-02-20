@@ -84,17 +84,30 @@ class Dealer {
         this.secretCard = this.hand[0]
     }
 
-    verifyHand(player) {
-        let total = player.hand.reduce((acc, card) => {
-            return acc += card.value
-        }, 0)
+    countPoints(player) {
+        // console.log(player)
+        let aces = player.hand.filter(card => card.name === 'Ace')
+        let others = player.hand.filter(card => card.value)
+        
+        let total = others.reduce((acc, card) => acc += card.value, 0)
+
+        
+        aces.forEach(ace => {
+            if (total < 11) {
+                total += ace.maxValue
+            } else {
+                total += ace.minValue
+            }
+        })
+        
+        console.log(total);
         
         if (total === 21){
-            console.log('win');
+            player.win();
         } else if (total > 21) {
-            console.log('lose');
+            player.bust()
         } else {
-            console.log('hit?');
+            console.log('hit or stand?');
         }
     }
 }
@@ -120,7 +133,7 @@ class Player {
         console.log('bet placed');
     }
 
-    stand(){
+    stand() {
         console.log('waiting');
     }
 
@@ -132,7 +145,7 @@ class Player {
         console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
     }
 
-    bust () {
+    bust() {
         let originalBet = this.bet;
         this.bet = 0;
         this.makeBet(originalBet);
