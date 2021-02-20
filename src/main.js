@@ -85,7 +85,6 @@ class Dealer {
     }
 
     countPoints(player) {
-        // console.log(player)
         let aces = player.hand.filter(card => card.name === 'Ace')
         let others = player.hand.filter(card => card.value)
         
@@ -100,14 +99,38 @@ class Dealer {
             }
         })
         
-        console.log(total);
+            return total;
         
-        if (total === 21){
-            player.win();
-        } else if (total > 21) {
-            player.bust()
+    }
+
+    consecutiveHits(deck) {
+        while (this.countPoints(this) < 17) {
+            // console.log('loop', 'total => ', this.countPoints(this));
+            this.hit(deck, this);
+        }
+
+        return this.countPoints(this);
+    }
+
+    resolve(deck, player) {
+        const playerTotal = this.countPoints(player);
+
+        if (playerTotal === 21) {
+            this.countPoints(this) === 21 ? console.log('push') : player.win();
+        } else if (playerTotal > 21) {
+            player.bust();
         } else {
-            console.log('hit or stand?');
+            const dealerTotal = this.countPoints(this) < 17 ? this.consecutiveHits(deck) : this.countPoints(this);
+
+            console.log('inside resolve ====> ', 'dealer total => ', dealerTotal, 'player total => ', playerTotal);
+
+            if (playerTotal === dealerTotal) {
+                console.log('push');            
+            } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
+                player.win()
+            } else {
+                console.log('house wins');
+            }
         }
     }
 }
