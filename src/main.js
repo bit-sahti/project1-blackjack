@@ -111,5 +111,12 @@ class Player {
         ];
         this.bet = 0;
         this.hand = [];
-    }        
+    }
+
+    makeBet(amount) {
+        this.cash -= amount;
+        this.bet += amount;
+
+        console.log('bet placed');
+    }
 }
