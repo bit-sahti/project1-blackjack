@@ -119,4 +119,24 @@ class Player {
 
         console.log('bet placed');
     }
+
+    stand(){
+        console.log('waiting');
+    }
+
+    win() {
+        let originalBet = this.bet
+        this.cash += originalBet * 1.5;
+        this.bet = 0;
+        this.makeBet(originalBet)
+        console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
+    }
+
+    bust () {
+        let originalBet = this.bet;
+        this.bet = 0;
+        this.makeBet(originalBet);
+
+        console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
+    }
 }
