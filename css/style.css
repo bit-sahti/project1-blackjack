@@ -1,0 +1,17 @@
+.cassino {
+    margin: 30px auto;
+    width: 1000px;
+    height: 600px;
+    background-color: rgb(223, 215, 215);
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.side {
+    height: 50%;
+}
