@@ -1,21 +1,18 @@
-const startGame = document.querySelector('.start')
-const playerHit = document.querySelector('.hit')
-const playerStand = document.querySelector('.stand')
-const placeBet = document.querySelector('.bet')
-const hands = document.getElementsByClassName('hand')
+class Cassino {
+    constructor() {
+        this.startGame = document.querySelector('.start')
+        this.playerHit = document.querySelector('.hit')
+        this.playerStand = document.querySelector('.stand')
+        this.placeBet = document.querySelector('.bet')
+    }
 
-startGame.addEventListener('click', () => {
-    dealer.start(deck, [player, dealer])
-})
+    listen() {
+        this.startGame.addEventListener('click', () => dealer.start(deck, [player, dealer]))
+        this.playerHit.addEventListener('click', () => dealer.hit(deck, player))
+        this.playerStand.addEventListener('click', () => dealer.resolve(deck, player))
+        this.placeBet.addEventListener('click', () => player.makeBet(500))
+    }
+}
 
-playerHit.addEventListener('click', () => {
-    dealer.hit(deck, player)
-})
-
-playerStand.addEventListener('click', () => {
-    dealer.resolve(deck, player)
-})
-
-placeBet.addEventListener('click', () => {
-    player.makeBet(500)
-})
+const cassino = new Cassino();
+cassino.listen()
