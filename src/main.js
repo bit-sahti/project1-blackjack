@@ -1,6 +1,6 @@
 class Deck {
     constructor() {
-        this.suits = ['clubs']
+        this.suits = ['clubs', 'diamonds', 'hearts', 'spades']
         this.cards = []
     }
 
@@ -55,7 +55,10 @@ class Dealer {
     }
     
     start(deck, players) {
+        players.forEach(player => player.hand = [])
+        
         console.log('starting');
+        console.log(players);
         
         players.forEach(player => {
             this.hit(deck, player);
@@ -132,6 +135,8 @@ class Dealer {
                 console.log('house wins');
             }
         }
+
+        console.log(deck);
     }
 }
 
@@ -146,7 +151,6 @@ class Player {
             {value: 250, quantity: 2},
         ];
         this.bet = 0;
-        this.hand = [];
     }
 
     makeBet(amount) {
@@ -164,7 +168,8 @@ class Player {
         let originalBet = this.bet
         this.cash += originalBet * 1.5;
         this.bet = 0;
-        this.makeBet(originalBet)
+        this.makeBet(originalBet);
+        this.hand = [];
         console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
     }
 
@@ -172,7 +177,13 @@ class Player {
         let originalBet = this.bet;
         this.bet = 0;
         this.makeBet(originalBet);
+        this.hand = []
 
         console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
     }
 }
+
+let deck = new Deck()
+deck.build()
+let dealer = new Dealer()
+let player = new Player()
