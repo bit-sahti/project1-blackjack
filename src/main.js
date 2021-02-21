@@ -16,7 +16,7 @@ class Deck {
     }
 
     addTens() {
-        const names = ['Jack', 'Queen', 'King']
+        const names = ['J', 'Q', 'K']
 
         this.suits.forEach((suitName) => {
             for (let i = 0; i < 3; i++) {
@@ -32,7 +32,7 @@ class Deck {
     addAces() {
         this.suits.forEach(suitName => {
             this.cards.push({
-                name: 'Ace',
+                name: 'A',
                 minValue: 1,
                 maxValue: 11,
                 suit: suitName
@@ -51,12 +51,14 @@ class Deck {
 
 class Dealer {
     constructor() {
+        this.type = 'dealer';
         this.hand = [];
     }
     
     start(deck, players) {
         players.forEach(player => player.hand = [])
-        
+        cassino.discartCards(players)
+
         console.log('starting');
         console.log(players);
         
@@ -78,6 +80,7 @@ class Dealer {
         let random = Math.floor(Math.random() * deck.cards.length);
             
         player.hand.push(deck.cards[random])
+        cassino.handCard(deck.cards[random], player)
         deck.cards.splice(random, 1)
     
         console.log('hit');      
@@ -88,7 +91,7 @@ class Dealer {
     }
 
     countPoints(player) {
-        let aces = player.hand.filter(card => card.name === 'Ace')
+        let aces = player.hand.filter(card => card.name === 'A')
         let others = player.hand.filter(card => card.value)
         
         let total = others.reduce((acc, card) => acc += card.value, 0)
@@ -142,6 +145,7 @@ class Dealer {
 
 class Player {
     constructor() {
+        this.type = 'player';
         this.cash = 1000;
         // this.chipsValues = [25, 50, 100, 250, 500, 1000, 5000]
         this.chips = [
@@ -169,7 +173,6 @@ class Player {
         this.cash += originalBet * 1.5;
         this.bet = 0;
         this.makeBet(originalBet);
-        this.hand = [];
         console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
     }
 
@@ -177,7 +180,6 @@ class Player {
         let originalBet = this.bet;
         this.bet = 0;
         this.makeBet(originalBet);
-        this.hand = []
 
         console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
     }
