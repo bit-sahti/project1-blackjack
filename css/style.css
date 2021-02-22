@@ -18,7 +18,9 @@
 .hand {
     display: flex;
     flex-wrap: wrap;
+    width: 600px;
 }
+
 .card {
     position: relative;
     display: flex;
@@ -32,11 +34,20 @@
     border-radius: 10px;
 }
 
+
 .hearts,
 .diamonds {
     color: rgb(221, 9, 9);
 }
 
+.secret {
+    /* display: hidden; */
+    /* position: absolute; */
+    background-color: rgb(65, 65, 65);
+    color: rgb(65, 65, 65);
+    /* z-index: 10; */
+    /* content: 'sdfghn'; */
+}
 .card .top,
 .card .bottom {
     position: absolute;

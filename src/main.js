@@ -76,7 +76,8 @@ class Dealer {
     }
     
     getSecretCard() {
-        this.secretCard = this.hand[0]
+        this.secretCard = this.hand[0];
+        cassino.hideCard()
     }
     
     countPoints(player) {
@@ -107,6 +108,7 @@ class Dealer {
     }
     
     resolve(deck, player) {
+        cassino.revealCard()
         const playerTotal = this.countPoints(player);
         
         if (playerTotal === 21) {
@@ -136,9 +138,8 @@ class Dealer {
         
         players.forEach(player => {
             this.hit(deck, player);
+            if (player.type === 'dealer') player.getSecretCard()
         })
-    
-        players[players.length - 1].getSecretCard()
     
         players.forEach(player => {
             this.hit(deck, player);

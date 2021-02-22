@@ -79,6 +79,16 @@ class Cassino {
         });
     }
 
+    hideCard(){
+        this.secretCard = document.querySelector('.dealer .hand .card');
+        this.secretCard.classList.add('secret');
+    }
+
+    revealCard() {
+        this.secretCard.classList.remove('secret');
+
+    }
+
     updateCash(amount) {
         this.playerCash.innerHTML = `Cash: ${amount}`
     }
