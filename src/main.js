@@ -55,47 +55,32 @@ class Dealer {
         this.hand = [];
     }
     
-    start(deck, players) {
-        players.forEach(player => player.hand = [])
-        cassino.discartCards(players)
-
-        console.log('starting');
-        console.log(players);
-        
-        players.forEach(player => {
-            this.hit(deck, player);
-        })
-
-        players[players.length - 1].getSecretCard()
-
-        players.forEach(player => {
-            this.hit(deck, player);
-        })
-        
-        console.log('ready to go');
-
-    }
     
     hit(deck, player) {        
         let random = Math.floor(Math.random() * deck.cards.length);
-            
+        
         player.hand.push(deck.cards[random])
         cassino.handCard(deck.cards[random], player)
         deck.cards.splice(random, 1)
-    
-        console.log('hit');      
+
+        console.log('hit');
+
+        if (player.type === 'player' && this.countPoints(player) >= 21) {
+            this.resolve(deck, player)
+            console.log('eraly resolve');
+        }        
     }
     
     getSecretCard() {
         this.secretCard = this.hand[0]
     }
-
+    
     countPoints(player) {
         let aces = player.hand.filter(card => card.name === 'A')
         let others = player.hand.filter(card => card.value)
         
         let total = others.reduce((acc, card) => acc += card.value, 0)
-
+        
         
         aces.forEach(ace => {
             if (total < 11) {
@@ -105,31 +90,30 @@ class Dealer {
             }
         })
         
-            return total;
+        return total;
         
     }
-
+    
     consecutiveHits(deck) {
         while (this.countPoints(this) < 17) {
-            // console.log('loop', 'total => ', this.countPoints(this));
             this.hit(deck, this);
         }
-
+        
         return this.countPoints(this);
     }
-
+    
     resolve(deck, player) {
         const playerTotal = this.countPoints(player);
-
+        
         if (playerTotal === 21) {
             this.countPoints(this) === 21 ? console.log('push') : player.win();
         } else if (playerTotal > 21) {
             player.bust();
         } else {
             const dealerTotal = this.countPoints(this) < 17 ? this.consecutiveHits(deck) : this.countPoints(this);
-
+            
             console.log('inside resolve ====> ', 'dealer total => ', dealerTotal, 'player total => ', playerTotal);
-
+            
             if (playerTotal === dealerTotal) {
                 console.log('push');            
             } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
@@ -138,34 +122,59 @@ class Dealer {
                 console.log('house wins');
             }
         }
-
+        
         console.log(deck);
+    }
+
+    start(deck, players) {
+        this.prepareTable(players)
+        console.log('starting');
+        
+        players.forEach(player => {
+            this.hit(deck, player);
+        })
+    
+        players[players.length - 1].getSecretCard()
+    
+        players.forEach(player => {
+            this.hit(deck, player);
+        })
+        
+        console.log('ready to go');    
+    }
+
+    prepareTable(players) {
+        cassino.removeChips()
+        cassino.discartCards(players)
+
+        players.forEach(player => {
+            if (player.type === 'player') player.getExtraChips()
+            player.hand = []
+            
+        })
     }
 }
 
 class Player {
     constructor() {
         this.type = 'player';
-        this.cash = 1000;
-        // this.chipsValues = [25, 50, 100, 250, 500, 1000, 5000]
-        this.chips = [
-            {value: 25, quantity: 6},
-            {value: 50, quantity: 3},
-            {value: 100, quantity: 2},
-            {value: 250, quantity: 2},
-        ];
+        this.cash = 5000;
+        this.chipsValues = [25, 50, 100, 250, 500, 1000, 5000, 10000, 100000]
         this.bet = 0;
+    }
+
+    getExtraChips() {
+        let extraChips = this.chipsValues.filter(value => {
+            return this.cash / value > 2
+        })
+        
+        cassino.generateChips(extraChips)
     }
 
     makeBet(amount) {
         this.cash -= amount;
+        cassino.updateCash(this.cash)
         this.bet += amount;
-
-        console.log('bet placed');
-    }
-
-    stand() {
-        console.log('waiting');
     }
 
     win() {
@@ -189,3 +198,5 @@ let deck = new Deck()
 deck.build()
 let dealer = new Dealer()
 let player = new Player()
+
+// player.getAvailableChips()
