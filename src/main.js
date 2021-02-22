@@ -1,15 +1,17 @@
 class Deck {
     constructor() {
-        this.suits = ['clubs', 'diamonds', 'hearts', 'spades']
-        this.cards = []
+        this.suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+        this.suitSymbols = ['&clubs;', '&diams;', '&hearts;', '&spades;'];
+        this.cards = [];
     }
 
     addSingles(){
-        this.suits.forEach((suitName) => {
+        this.suits.forEach((suitName, suitIndex) => {
             for (let i = 2; i < 11; i++) {
                 this.cards.push({
                     value: i,
-                    suit: suitName
+                    suit: suitName,
+                    suitSymbol: this.suitSymbols[suitIndex]
                 })
             }
         })
@@ -18,24 +20,26 @@ class Deck {
     addTens() {
         const names = ['J', 'Q', 'K']
 
-        this.suits.forEach((suitName) => {
+        this.suits.forEach((suitName, suitIndex) => {
             for (let i = 0; i < 3; i++) {
                 this.cards.push({
                     name: names[i],
                     value: 10,
-                    suit: suitName
+                    suit: suitName,
+                    suitSymbol: this.suitSymbols[suitIndex]
                 })
             }
         })
     }
 
     addAces() {
-        this.suits.forEach(suitName => {
+        this.suits.forEach((suitName, suitIndex) => {
             this.cards.push({
                 name: 'A',
                 minValue: 1,
                 maxValue: 11,
-                suit: suitName
+                suit: suitName,
+                suitSymbol: this.suitSymbols[suitIndex]
             })
         })
     }

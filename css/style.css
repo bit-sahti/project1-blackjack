@@ -1,17 +1,68 @@
 .cassino {
     margin: 30px auto;
-    width: 1000px;
+    width: 1200px;
     height: 600px;
     background-color: rgb(223, 215, 215);
 }
 
 .table {
     display: flex;
-    flex-direction: column;
+    flex-direction: row-reverse;
     justify-content: space-between;
     height: 100%;
 }
 
 .side {
     height: 50%;
+}
+.hand {
+    display: flex;
+    flex-wrap: wrap;
+}
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 200px;
+    margin: 10px;
+    background-color: rgb(245, 239, 231);
+    border: 1px solid antiquewhite;
+    border-radius: 10px;
+}
+
+.hearts,
+.diamonds {
+    color: rgb(221, 9, 9);
+}
+
+.card .top,
+.card .bottom {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 35px;
+}
+
+.card .top {
+    align-self: flex-start;
+    margin-top: -10px;
+}
+
+.card .bottom {
+    align-self: flex-end;
+    margin-bottom: -10px;
+}
+
+.card span {
+    padding: 10px;
+  }
+  
+.card > span {
+    font-size: 140px;
+    margin: 0;
+    padding: 0;
 }

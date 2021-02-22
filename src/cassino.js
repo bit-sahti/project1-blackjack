@@ -32,7 +32,7 @@ class Cassino {
             chips[i].addEventListener('click', () => {
                 const amount = Number(chips[i].innerHTML)
                 player.makeBet(amount)
-                this.playerBet.innerHTML = `${player.bet}`
+                this.playerBet.innerHTML = `Bet: ${player.bet}`
             })
         }
     }
@@ -47,14 +47,26 @@ class Cassino {
 
     handCard(card, player) {
         const playerHand = document.querySelector(`.${player.type} .hand`)
-        const newDiv = document.createElement('div')
+        const cardDiv = document.createElement('div')
 
-        newDiv.setAttribute('class', 'card') 
-        newDiv.classList.add(`${card.suit}`)
-        newDiv.innerHTML = `${card.name ? card.name : card.value}`
+        cardDiv.setAttribute('class', 'card') 
+        cardDiv.classList.add(`${card.suit}`)
+        cardDiv.innerHTML = `
+            <div class="top">
+                <span>${card.name ? card.name : card.value}</span>
+                <span>${card.suitSymbol}</span> 
+            </div>
+            <span>${card.suitSymbol}</span>
+            <div class="bottom">
+                <span>${card.suitSymbol}</span> 
+                <span>${card.name ? card.name : card.value}</span>
+            </div>
+        `
+
+        // console.log(cardDiv.innerHTML);
       
 
-        playerHand.appendChild(newDiv)
+        playerHand.appendChild(cardDiv)
     }
 
     discartCards(players) {
@@ -68,7 +80,7 @@ class Cassino {
     }
 
     updateCash(amount) {
-        this.playerCash.innerHTML = `${amount}`
+        this.playerCash.innerHTML = `Cash: ${amount}`
     }
 }
 
