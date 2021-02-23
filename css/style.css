@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    /* margin: 0; */
+    padding: 0;
+}
+
 .cassino {
     margin: 30px auto;
     width: 1200px;
@@ -81,4 +87,64 @@
     font-size: 140px;
     margin: 0;
     padding: 0;
+}
+
+.chips button, 
+.chips span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chips button {
+    position: relative;
+    box-sizing: content-box;
+    cursor: pointer;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 13px dashed #fff;
+}
+
+.chips span {
+    width: 75%;
+    height: 75%;
+    background-color: inherit;
+    border-radius: 50%;
+    border: 3px dashed #fff;
+    color: #fff;
+    font-weight: bold;
+
+}
+
+#n-25 {
+    background-color: #D5A021;
+}
+
+#n-50 {
+    background-color: #d11d1d;
+}
+
+#n-100 {
+    background-color: #248232;
+}
+
+#n-250 {
+    background-color: #053C5E;
+}
+
+#n-500 {
+    background-color: #240115;
+}
+
+#n-1000 {
+    background-color: #A30000;
+}
+
+#n-5000 {
+    background-color: #050A30;
+}
+
+#n-10000 {
+    background-color: #000;
 }

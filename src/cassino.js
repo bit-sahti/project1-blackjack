@@ -18,8 +18,9 @@ class Cassino {
         
         for (let i = 0; i < values.length; i++) {
             const newChip = document.createElement('button')
-            newChip.setAttribute('id', `${values[i]}`)
-            chipsContainer.appendChild(newChip).innerHTML = `${values[i]}`
+            newChip.setAttribute('id', `n-${values[i]}`)
+            chipsContainer.appendChild(newChip).innerHTML = `<span>${values[i]}</span>`
+            // console.log(newChip.innerHTML);
         }
 
         this.waitBet()
@@ -30,7 +31,8 @@ class Cassino {
 
         for (let i = 0; i < chips.length; i++) {
             chips[i].addEventListener('click', () => {
-                const amount = Number(chips[i].innerHTML)
+                const amount = Number(chips[i].querySelector('span').innerHTML)
+                console.log(chips[i].querySelector('span').innerHTML);
                 player.makeBet(amount)
                 this.playerBet.innerHTML = `Bet: ${player.bet}`
             })

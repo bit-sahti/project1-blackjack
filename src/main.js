@@ -167,7 +167,7 @@ class Dealer {
 class Player {
     constructor() {
         this.type = 'player';
-        this.cash = 5000;
+        this.cash = 50000;
         this.chipsValues = [25, 50, 100, 250, 500, 1000, 5000, 10000, 100000]
         this.bet = 0;
     }
