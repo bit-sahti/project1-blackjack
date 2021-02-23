@@ -106,6 +106,10 @@
     border: 13px dashed #fff;
 }
 
+.chips button:focus {
+    outline: none;
+}
+
 .chips span {
     width: 75%;
     height: 75%;

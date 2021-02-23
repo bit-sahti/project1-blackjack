@@ -31,9 +31,10 @@ class Cassino {
 
         for (let i = 0; i < chips.length; i++) {
             chips[i].addEventListener('click', () => {
-                const amount = Number(chips[i].querySelector('span').innerHTML)
-                console.log(chips[i].querySelector('span').innerHTML);
+                const amount = Number(chips[i].querySelector('span').innerHTML);
                 player.makeBet(amount)
+                this.removeChips()
+                player.getExtraChips()
                 this.playerBet.innerHTML = `Bet: ${player.bet}`
             })
         }
