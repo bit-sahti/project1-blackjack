@@ -60,11 +60,7 @@ class Cassino {
             <div class="bottom">
                 <span>${card.suitSymbol}</span> 
                 <span>${card.name ? card.name : card.value}</span>
-            </div>
-        `
-
-        // console.log(cardDiv.innerHTML);
-      
+            </div>`
 
         playerHand.appendChild(cardDiv)
     }
@@ -86,7 +82,15 @@ class Cassino {
 
     revealCard() {
         this.secretCard.classList.remove('secret');
+        this.displayTotal(dealer, dealer.countPoints(dealer))
+    }
 
+    displayTotal(player, totalPoints) {
+        let totalDisplay = document.querySelector(`.${player.type} .total`);
+
+        totalDisplay.classList.remove('hidden')
+        totalDisplay.innerHTML = `Total: ${totalPoints}`
+        // console.log('here', points);
     }
 
     updateCash(amount) {
@@ -96,5 +100,6 @@ class Cassino {
 
 const cassino = new Cassino();
 cassino.listen()
+// cassino.displayTotal(player)
 // cassino.generateChips([25, 100, 250, 500, 1000])
 // cassino.handCard(deck, player)

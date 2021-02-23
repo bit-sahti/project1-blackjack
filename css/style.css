@@ -15,10 +15,15 @@
 .side {
     height: 50%;
 }
+
 .hand {
     display: flex;
     flex-wrap: wrap;
     width: 600px;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 .card {

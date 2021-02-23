@@ -67,11 +67,13 @@ class Dealer {
         cassino.handCard(deck.cards[random], player)
         deck.cards.splice(random, 1)
 
+        if (player.type === 'player') cassino.displayTotal(player, this.countPoints(player))
+
         console.log('hit');
 
         if (player.type === 'player' && this.countPoints(player) >= 21) {
             this.resolve(deck, player)
-            console.log('eraly resolve');
+            console.log('early resolve');
         }        
     }
     
