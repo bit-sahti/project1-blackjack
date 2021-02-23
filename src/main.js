@@ -104,13 +104,14 @@ class Dealer {
     consecutiveHits(deck) {
         while (this.countPoints(this) < 17) {
             this.hit(deck, this);
+            cassino.displayTotal(dealer, this.countPoints(this))
         }
         
         return this.countPoints(this);
     }
     
     resolve(deck, player) {
-        cassino.revealCard()
+        cassino.revealCard();
         const playerTotal = this.countPoints(player);
         
         if (playerTotal === 21) {
@@ -120,7 +121,7 @@ class Dealer {
         } else {
             const dealerTotal = this.countPoints(this) < 17 ? this.consecutiveHits(deck) : this.countPoints(this);
             
-            console.log('inside resolve ====> ', 'dealer total => ', dealerTotal, 'player total => ', playerTotal);
+            // console.log('inside resolve ====> ', 'dealer total => ', dealerTotal, 'player total => ', playerTotal);
             
             if (playerTotal === dealerTotal) {
                 console.log('push');            
@@ -190,7 +191,7 @@ class Player {
         this.cash += originalBet * 1.5;
         this.bet = 0;
         this.makeBet(originalBet);
-        console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
+        // console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
     }
 
     bust() {
@@ -198,7 +199,7 @@ class Player {
         this.bet = 0;
         this.makeBet(originalBet);
 
-        console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
+        // console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
     }
 }
 
