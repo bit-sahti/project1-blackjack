@@ -93,6 +93,14 @@ class Cassino {
         // console.log('here', points);
     }
 
+    hideTotal() {
+        let totalDisplays = document.querySelectorAll('.total');
+
+        totalDisplays.forEach(display => {
+            display.classList.add('hidden')
+        })
+    }
+
     updateCash(amount) {
         this.playerCash.innerHTML = `Cash: ${amount}`
     }

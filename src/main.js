@@ -153,6 +153,7 @@ class Dealer {
     prepareTable(players) {
         cassino.removeChips()
         cassino.discartCards(players)
+        cassino.hideTotal()
 
         players.forEach(player => {
             if (player.type === 'player') player.getExtraChips()
