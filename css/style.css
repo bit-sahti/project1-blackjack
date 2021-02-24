@@ -4,28 +4,75 @@
     padding: 0;
 }
 
-.cassino {
-    margin: 30px auto;
-    width: 1200px;
-    height: 600px;
-    background-color: rgb(223, 215, 215);
+body {
+    background-image: linear-gradient(to left bottom, #08320e, #09360e, #0a390e, #0c3d0d, #0e410c);
+}
+
+button {
+    cursor: pointer;
+
+}
+button:focus {
+    outline: none;
 }
 
 .table {
+    /* border: 2px solid black; */
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    height: 100%;
+    margin: 30px auto;
 }
 
+.play-controls {
+    /* border: 1px solid black; */
+    width: 200px;
+    /* margin-top: -40px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.play-controls button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* border: none; */
+    border-color: white;
+    background-color: #3c813e;
+    color: rgb(230, 213, 213);
+    font-weight: bold;
+    /* text-shadow: black; */
+}
+
+
+
 .side {
-    height: 50%;
+    width: 50%;
+    padding: 10px 20px 30px;
+}
+
+.total {    
+    color: #fff;
+    font-weight: 600;
+    opacity: .8;
+}
+
+.dealer.side {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end; 
 }
 
 .hand {
+    /* width: 50%; */
     display: flex;
-    flex-wrap: wrap;
-    width: 600px;
+    flex-wrap: wrap; 
+    /* margin: auto; */
 }
 
 .hidden {
@@ -34,17 +81,26 @@
 
 .card {
     position: relative;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 150px;
     height: 200px;
     margin: 10px;
     background-color: rgb(245, 239, 231);
-    border: 1px solid antiquewhite;
+    border: 1px solid rgb(235, 222, 205);
     border-radius: 10px;
+    /* box-shadow: 1px 1px 1px 10px 50px red; */
 }
 
+.card:nth-child(2n),
+.card:nth-child(3n),
+.card:nth-child(4n),
+.card:nth-child(5n),
+.card:nth-child(6n) {
+    margin-left: -100px;
+    /* z-index: 5; */
+}
 
 .hearts,
 .diamonds {
@@ -89,6 +145,13 @@
     padding: 0;
 }
 
+.chips {
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    /* margin: 0 auto; */
+}
+
 .chips button, 
 .chips span {
     display: inline-flex;
@@ -100,10 +163,12 @@
     position: relative;
     box-sizing: content-box;
     cursor: pointer;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 13px dashed #fff;
+    border: 10px dashed #fff;
+    
+    /* margin: 0 auto; */
 }
 
 .chips button:focus {

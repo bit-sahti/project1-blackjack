@@ -4,7 +4,7 @@ class Cassino {
         this.playerHit = document.querySelector('.hit')
         this.playerStand = document.querySelector('.stand')
         this.playerCash = document.querySelector('.cash')
-        this.playerBet = document.querySelector('.bet')
+        this.playerBet = document.querySelector('.bet p')
     }
 
     listen() {
@@ -35,7 +35,7 @@ class Cassino {
                 player.makeBet(amount)
                 this.removeChips()
                 player.getExtraChips()
-                this.playerBet.innerHTML = `Bet: ${player.bet}`
+                this.playerBet.innerHTML = `$${player.bet}`
             })
         }
     }
@@ -105,7 +105,7 @@ class Cassino {
     }
 
     updateCash(amount) {
-        this.playerCash.innerHTML = `Cash: ${amount}`
+        this.playerCash.innerHTML = `$${amount}`
     }
 }
 
