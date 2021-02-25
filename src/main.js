@@ -44,10 +44,12 @@ class Deck {
         })
     }
 
-    build () {
-        this.addAces(),
-        this.addSingles(),
-        this.addTens()
+    build (num) {
+        for (let i = 0; i < num; i ++) {
+            this.addAces(),
+            this.addSingles(),
+            this.addTens()
+        }
     }
 }
 
@@ -204,7 +206,7 @@ class Player {
 
 //Prepare to run game
 const deck = new Deck()
-deck.build()
+deck.build(1)
 
 const dealer = new Dealer()
 const player = new Player()
