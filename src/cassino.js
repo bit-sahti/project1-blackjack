@@ -2,21 +2,55 @@ class Cassino {
     constructor() {
         this.startGame = document.querySelector('.start')
         this.playerHit = document.querySelector('.hit')
+        this.playerDeal = document.querySelector('.deal')
         this.playerStand = document.querySelector('.stand')
         this.playerCash = document.querySelector('.cash')
         this.playerBet = document.querySelector('.bet p')
     }
 
     listen() {
-        this.startGame.addEventListener('click', () => dealer.start(deck, [player, dealer]))
-        this.playerHit.addEventListener('click', () => dealer.hit(deck, player))
-        this.playerStand.addEventListener('click', () => dealer.resolve(deck, player))
+        const warning = 'Cards must be dealt.'
+
+        this.startGame.addEventListener('click', () => {
+            const main = document.querySelector('main')
+            main.classList.remove('hidden')
+            main.scrollIntoView()
+            
+            dealer.prepareTable([player, dealer])
+        })
+
+        this.playerHit.addEventListener('click', () => {
+            if (player.hand.length < 2) {
+                window.alert(warning)
+            } else {
+                dealer.hit(deck, player)
+            }
+
+        })
+        
+        this.playerStand.addEventListener('click', () => {
+            if (player.hand.length < 2) {
+                window.alert(warning)
+            } else {
+                dealer.resolve(deck, player)
+            }
+        })
+            
+        this.playerDeal.addEventListener('click', () => {            
+            if (player.bet <= 0) {
+                window.alert('You must place a bet')
+            } else {
+                dealer.start(deck, [player, dealer])
+            }
+        })
     }
 
     generateChips(values) {
         const chipsContainer = document.querySelector('.chips')
+        // console.log(values);
         
         for (let i = 0; i < values.length; i++) {
+            // console.log(values);
             const newChip = document.createElement('button')
             newChip.setAttribute('id', `n-${values[i]}`)
             chipsContainer.appendChild(newChip).innerHTML = `<span>${values[i]}</span>`
@@ -32,9 +66,12 @@ class Cassino {
         for (let i = 0; i < chips.length; i++) {
             chips[i].addEventListener('click', () => {
                 const amount = Number(chips[i].querySelector('span').innerHTML);
+
                 player.makeBet(amount)
+
                 this.removeChips()
-                player.getExtraChips()
+                this.generateChips(player.getExtraChips())
+
                 this.playerBet.innerHTML = `$${player.bet}`
             })
         }
@@ -109,8 +146,6 @@ class Cassino {
     }
 }
 
+//Prepare to run game;
 const cassino = new Cassino();
 cassino.listen()
-// cassino.displayTotal(player)
-// cassino.generateChips([25, 100, 250, 500, 1000])
-// cassino.handCard(deck, player)

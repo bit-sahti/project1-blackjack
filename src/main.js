@@ -137,8 +137,7 @@ class Dealer {
 
     start(deck, players) {
         this.prepareTable(players)
-        console.log('starting');
-        
+       
         players.forEach(player => {
             this.hit(deck, player);
             if (player.type === 'dealer') player.getSecretCard()
@@ -148,7 +147,7 @@ class Dealer {
             this.hit(deck, player);
         })
         
-        console.log('ready to go');    
+        console.log('ready to go');
     }
 
     prepareTable(players) {
@@ -157,7 +156,7 @@ class Dealer {
         cassino.hideTotal()
 
         players.forEach(player => {
-            if (player.type === 'player') player.getExtraChips()
+            if (player.type === 'player') cassino.generateChips(player.getExtraChips())
             player.hand = []
             
         })
@@ -177,7 +176,7 @@ class Player {
             return this.cash / value > 2
         })
         
-        cassino.generateChips(extraChips)
+        return extraChips;
     }
 
     makeBet(amount) {
@@ -203,9 +202,9 @@ class Player {
     }
 }
 
-let deck = new Deck()
+//Prepare to run game
+const deck = new Deck()
 deck.build()
-let dealer = new Dealer()
-let player = new Player()
 
-// player.getAvailableChips()
+const dealer = new Dealer()
+const player = new Player()
