@@ -44,8 +44,8 @@ class Deck {
         })
     }
 
-    build (num) {
-        for (let i = 0; i < num; i ++) {
+    build(num) {
+        for (let i = 0; i < num; i++) {
             this.addAces(),
             this.addSingles(),
             this.addTens()
@@ -64,14 +64,15 @@ class Dealer {
     
     hit(deck, player) {        
         let random = Math.floor(Math.random() * deck.cards.length);
+        console.log(deck);
         
         player.hand.push(deck.cards[random])
         cassino.handCard(deck.cards[random], player)
+        // console.log('hit');
         deck.cards.splice(random, 1)
 
         if (player.type === 'player') cassino.displayTotal(player, this.countPoints(player))
 
-        console.log('hit');
 
         if (player.type === 'player' && this.countPoints(player) >= 21) {
             this.resolve(deck, player)
@@ -80,7 +81,7 @@ class Dealer {
     }
     
     getSecretCard() {
-        this.secretCard = this.hand[0];
+        this.secretCard = this.hand[1];
         cassino.hideCard()
     }
     
@@ -93,9 +94,9 @@ class Dealer {
         
         aces.forEach(ace => {
             if (total < 11) {
-                total += ace.maxValue
+                total += ace.maxValue;
             } else {
-                total += ace.minValue
+                total += ace.minValue;
             }
         })
         
@@ -137,13 +138,14 @@ class Dealer {
         console.log(deck);
     }
 
-    start(deck, players) {
+    deal(deck, players) {
         this.prepareTable(players)
-       
+        
         players.forEach(player => {
             this.hit(deck, player);
             if (player.type === 'dealer') player.getSecretCard()
         })
+        console.log('deal');
     
         players.forEach(player => {
             this.hit(deck, player);
@@ -162,6 +164,19 @@ class Dealer {
             player.hand = []
             
         })
+    }
+
+    restore() {
+        this.hand = [];
+        this.secretCard = '';
+    }
+
+    start(deck, num, players) {
+        deck.cards = [];
+        deck.build(num);
+        
+        players.forEach (player => player.restore())
+        dealer.prepareTable([player, dealer])
     }
 }
 
@@ -202,11 +217,19 @@ class Player {
 
         // console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
     }
+
+    restore() {
+        this.hand = [];
+        this.cash = 5000;
+        this.bet = 0;
+    }
 }
 
 //Prepare to run game
 const deck = new Deck()
-deck.build(1)
+deck.build(2)
+
+// console.log(deck);
 
 const dealer = new Dealer()
 const player = new Player()

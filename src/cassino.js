@@ -16,7 +16,7 @@ class Cassino {
             main.classList.remove('hidden')
             main.scrollIntoView()
             
-            dealer.prepareTable([player, dealer])
+            dealer.start(deck, 2, [player, dealer])
         })
 
         this.playerHit.addEventListener('click', () => {
@@ -40,7 +40,7 @@ class Cassino {
             if (player.bet <= 0) {
                 window.alert('You must place a bet')
             } else {
-                dealer.start(deck, [player, dealer])
+                dealer.deal(deck, [player, dealer])
             }
         })
     }
@@ -88,6 +88,8 @@ class Cassino {
     handCard(card, player) {
         const playerHand = document.querySelector(`.${player.type} .hand`)
         const cardDiv = document.createElement('div')
+
+        console.log(card);
 
         cardDiv.setAttribute('class', 'card') 
         cardDiv.classList.add(`${card.suit}`)
