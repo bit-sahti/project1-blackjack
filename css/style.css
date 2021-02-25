@@ -23,8 +23,6 @@ header {
     background: -webkit-radial-gradient(top, #318F39, #000000);
     background: -moz-radial-gradient(top, #318F39, #000000);
     background: radial-gradient(to bottom, #318F39, #000000);
-    background-repeat: no-repeat;
-    background-size: cover;
     height: 100vh;
 }
 
@@ -85,7 +83,7 @@ header h1 {
     /* border: 1px solid black; */
 }
 
-.play-controls button {
+.hit-stand-btns button {
     width: 80px;
     height: 60px;
     /* margin: 5px; */
@@ -102,6 +100,19 @@ header h1 {
 .hit {
     background-color: #A30000;
     border-color: #770404;
+}
+
+button.deal {
+    width: 90px;
+    height: 65px;
+    background: #fff;    
+    border-color: rgb(231, 227, 227);
+    font-family: 'Luckiest Guy';
+    font-size: 20px;
+    color: black;
+    text-shadow: 2px 3px 2px #f1eeee;
+    /* text-transform: uppercase; */
+    margin-top: 50px;
 }
 
 .stand {

@@ -64,12 +64,12 @@ class Dealer {
     
     hit(deck, player) {        
         let random = Math.floor(Math.random() * deck.cards.length);
-        console.log(deck);
         
         player.hand.push(deck.cards[random])
         cassino.handCard(deck.cards[random], player)
-        // console.log('hit');
         deck.cards.splice(random, 1)
+        
+        console.log('hit');
 
         if (player.type === 'player') cassino.displayTotal(player, this.countPoints(player))
 
@@ -142,13 +142,13 @@ class Dealer {
         this.prepareTable(players)
         
         players.forEach(player => {
-            this.hit(deck, player);
-            if (player.type === 'dealer') player.getSecretCard()
+            this.hit(deck, player);            
         })
         console.log('deal');
     
         players.forEach(player => {
             this.hit(deck, player);
+            if (player.type === 'dealer') player.getSecretCard()
         })
         
         console.log('ready to go');
@@ -197,9 +197,29 @@ class Player {
     }
 
     makeBet(amount) {
-        this.cash -= amount;
-        cassino.updateCash(this.cash)
-        this.bet += amount;
+        if (this.cash >= amount) {
+            this.cash -= amount;
+            cassino.updateCash(this.cash)
+            this.bet += amount;
+        } else {
+          this.clearBet();
+        }
+      
+        cassino.updateBet();
+    }
+
+    double(deck, dealer) {
+        if (this.cash >= this.bet * 2) {
+          this.makeBet(this.bet);
+          console.log(this);
+          dealer.hit(deck, player);
+          dealer.resolve(deck, this)
+        }
+    }
+
+    clearBet() {
+        this.bet = 0;
+        cassino.updateBet();
     }
 
     win() {

@@ -6,6 +6,8 @@ class Cassino {
         this.playerStand = document.querySelector('.stand')
         this.playerCash = document.querySelector('.cash')
         this.playerBet = document.querySelector('.bet p')
+        this.playerClearBet = document.querySelector('.clear')
+        this.playerDoubleBet = document.querySelector('.double')
     }
 
     listen() {
@@ -42,6 +44,12 @@ class Cassino {
             } else {
                 dealer.deal(deck, [player, dealer])
             }
+
+            
+            if (player.cash >= player.bet * 2) {
+                this.playerDoubleBet.classList.remove('hidden')
+                this.playerDoubleBet.addEventListener('click', () => player.double(deck, dealer))
+            }
         })
     }
 
@@ -71,10 +79,22 @@ class Cassino {
 
                 this.removeChips()
                 this.generateChips(player.getExtraChips())
+                this.showClearButton()
 
-                this.playerBet.innerHTML = `$${player.bet}`
+                this.updateBet();
             })
         }
+    }
+
+    showClearButton() {
+        if (player.bet > 0) {
+            this.playerClearBet.classList.remove('hidden')
+            this.playerClearBet.addEventListener('click', () => player.clearBet())
+        }
+    }
+
+    updateBet() {
+        this.playerBet.innerHTML = `$${player.bet}`;
     }
 
     removeChips() {
@@ -118,7 +138,7 @@ class Cassino {
     }
 
     hideCard(){
-        this.secretCard = document.querySelector('.dealer .hand .card');
+        this.secretCard = document.querySelectorAll('.dealer .hand .card')[1];
         this.secretCard.classList.add('secret');
     }
 
