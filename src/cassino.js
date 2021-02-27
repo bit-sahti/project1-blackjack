@@ -1,13 +1,13 @@
 class Cassino {
     constructor() {
         this.startGame = document.querySelector('.start')
+        this.rules = document.querySelector('.rules')
         this.playerHit = document.querySelector('.hit')
         this.playerDeal = document.querySelector('.deal')
         this.playerStand = document.querySelector('.stand')
         this.playerCash = document.querySelector('.cash')
         this.playerBet = document.querySelector('.bet p')
-        this.playerClearBet = document.querySelector('.clear')
-        this.playerDoubleBet = document.querySelector('.double')
+        this.messagesSection = document.querySelector('.messages')
     }
 
     listen() {
@@ -17,8 +17,28 @@ class Cassino {
             const main = document.querySelector('main')
             main.classList.remove('hidden')
             main.scrollIntoView()
+
+            document.querySelector('header').classList.add('hidden')
             
             dealer.start(deck, 2, [player, dealer])
+        })
+
+        this.rules.addEventListener('click', () => {
+            const logo = document.querySelector('header div')
+            const explanation = document.querySelector('.explanation')
+
+            logo.classList.add('hidden')
+            explanation.classList.remove('hidden')
+            
+            document.querySelector('.explanation button').addEventListener('click', () => {
+                const main = document.querySelector('main')
+                main.classList.remove('hidden')
+                main.scrollIntoView()
+
+                document.querySelector('header').classList.add('hidden')
+                
+                dealer.start(deck, 2, [player, dealer])
+            })
         })
 
         this.playerHit.addEventListener('click', () => {
@@ -38,22 +58,23 @@ class Cassino {
             }
         })
             
-        this.playerDeal.addEventListener('click', () => {            
+        this.playerDeal.addEventListener('click', function dealOnce () {            
             if (player.bet <= 0) {
                 window.alert('You must place a bet')
             } else {
                 dealer.deal(deck, [player, dealer])
+                
+                    cassino.playerDeal.classList.add('hidden')
+                    player.canBet = false
+                    
+                
             }
 
-            
-            if (player.cash >= player.bet * 2) {
-                this.playerDoubleBet.classList.remove('hidden')
-                this.playerDoubleBet.addEventListener('click', () => player.double(deck, dealer))
-            }
         })
     }
 
     generateChips(values) {
+        this.removeChips()
         const chipsContainer = document.querySelector('.chips')
         // console.log(values);
         
@@ -72,24 +93,16 @@ class Cassino {
         const chips = document.querySelectorAll('.chips button')
 
         for (let i = 0; i < chips.length; i++) {
-            chips[i].addEventListener('click', () => {
+            chips[i].addEventListener('click', function listenToBets () {
                 const amount = Number(chips[i].querySelector('span').innerHTML);
 
                 player.makeBet(amount)
 
-                this.removeChips()
-                this.generateChips(player.getExtraChips())
-                this.showClearButton()
+                cassino.removeChips()
+                cassino.generateChips(player.getExtraChips())
 
-                this.updateBet();
+                cassino.updateBet();
             })
-        }
-    }
-
-    showClearButton() {
-        if (player.bet > 0) {
-            this.playerClearBet.classList.remove('hidden')
-            this.playerClearBet.addEventListener('click', () => player.clearBet())
         }
     }
 
@@ -109,7 +122,7 @@ class Cassino {
         const playerHand = document.querySelector(`.${player.type} .hand`)
         const cardDiv = document.createElement('div')
 
-        console.log(card);
+        // console.log(card);
 
         cardDiv.setAttribute('class', 'card') 
         cardDiv.classList.add(`${card.suit}`)
@@ -143,7 +156,12 @@ class Cassino {
     }
 
     revealCard() {
-        this.secretCard.classList.remove('secret');
+        console.log(dealer.secretCard, this.secretCard);
+        if(this.secretCard) {
+            console.log('remove called');
+            this.secretCard.classList.remove('secret');
+        }
+
         this.displayTotal(dealer, dealer.countPoints(dealer))
     }
 
@@ -165,6 +183,60 @@ class Cassino {
 
     updateCash(amount) {
         this.playerCash.innerHTML = `$${amount}`
+    }
+
+    showMessage(type) {
+        // window.alert(`you win! ${player.bet} added to your balance`);
+        const table = document.querySelector('table')
+        const message = document.querySelector(`.${type}`)
+
+        
+
+        this.messagesSection.classList.remove('hidden')        
+        message.classList.remove('hidden')
+
+        setTimeout(() => {
+            dealer.prepareTable([player, dealer])
+            player.clearBet()
+            this.updateCash(player.cash)
+
+            message.classList.add('hidden')            
+            this.messagesSection.classList.add('hidden')
+            this.playerDeal.classList.remove('hidden')
+        }, 1500)
+    }
+    
+    playerBlackjack() {
+        this.showMessage('blackjack')
+    }
+
+    playerWin() {
+        this.showMessage('win')
+    }
+
+    playerLose() {
+        // window.alert('you lose. house takes bet')
+        // this.updateCash(player.cash)
+        // this.updateBet()
+        this.showMessage('lose')
+    } 
+
+    playerBust() {
+        // window.alert('busted! house takes bet')
+        // this.updateCash(player.cash)
+        // this.updateBet()
+        this.showMessage('bust')
+    }
+
+    push() {
+        this.showMessage('push')
+    }
+
+    restart() {
+        document.querySelector('header').classList.remove('hidden')
+        document.querySelector('.table').classList.add('hidden')
+
+
     }
 }
 

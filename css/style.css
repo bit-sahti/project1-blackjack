@@ -2,7 +2,6 @@
 
 * {
     box-sizing: border-box;
-    /* margin: 0; */
     padding: 0;
 }
 
@@ -26,7 +25,8 @@ header {
     height: 100vh;
 }
 
-header h1 {
+header h1, 
+.messages h1{
     margin: 0 auto;
     font-family: 'Luckiest Guy';
     font-size: 120px;
@@ -39,7 +39,9 @@ header h1 {
     justify-content: center;
 }
 
-.header-buttons button {
+
+.header-buttons button,
+.explanation button {
     width: 200px;
     padding: 20px;
     border-radius: 10px;
@@ -49,8 +51,25 @@ header h1 {
     text-shadow: 2px 3px 2px #808080;
 }
 
+section.explanation {
+    position: absolute;
+    width: 50%;
+    color: #C0C0C0;
+    font-size: 18px;
+    font-weight: bold;
+    border: 5px solid #C0C0C0;
+    padding: 10px;
+    /* display: flex; */
+    flex-direction: column;
+}
+
+.explanation button {
+    margin: 0 auto;
+    display: block;
+}
 
 .table {
+    position: relative;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
@@ -128,6 +147,9 @@ button.deal {
 .side {
     width: 50%;
     padding: 10px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 
@@ -146,11 +168,6 @@ button.deal {
 .hand {
     display: flex;
     flex-wrap: wrap; 
-}
-
-.hidden {
-    display: none;
-    /* visibility: hidden; */
 }
 
 .card {
@@ -178,17 +195,30 @@ button.deal {
 
 .hearts,
 .diamonds {
-    color: rgb(221, 9, 9);
+    color: #dd0909;
 }
 
 .secret {
     /* display: hidden; */
     /* position: absolute; */
-    background-color: rgb(65, 65, 65);
-    color: rgb(65, 65, 65);
+    background-color: #111111;
+    color: #111111;
     /* z-index: 10; */
     /* content: 'sdfghn'; */
 }
+
+.secret span {
+    font-size: 0px;
+
+}
+
+.secret::after {
+    position: absolute;
+    content: '?';
+    font-size: 200px;
+    color: #eeeaea;
+}
+
 .card .top,
 .card .bottom {
     position: absolute;
@@ -220,6 +250,9 @@ button.deal {
 }
 
 .chips {
+    /* position: relative;
+    bottom: 50%; */
+    /* align-self: flex-end; */
     width: 70%;
     display: flex;
     flex-wrap: wrap;
@@ -286,4 +319,53 @@ button.deal {
 
 #n-10000 {
     background-color: #000;
+}
+
+.messages {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    /* opacity: .9; */
+}
+
+.messages div {
+    /* background-color:#ff0000; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* width: 100%;
+    height: 100%; */
+    /* background-color: green; */
+}
+
+.messages p {
+    margin-top: -3px;
+    font-weight: bold;
+}
+
+
+.faded {
+    opacity: .7;
+}
+
+.restart {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;    
+}
+
+main.hidden,
+div.hidden,
+p.hidden,
+.hidden {
+    display: none;
 }

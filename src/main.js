@@ -64,6 +64,8 @@ class Dealer {
     
     hit(deck, player) {        
         let random = Math.floor(Math.random() * deck.cards.length);
+
+        console.log('starting');
         
         player.hand.push(deck.cards[random])
         cassino.handCard(deck.cards[random], player)
@@ -77,12 +79,13 @@ class Dealer {
         if (player.type === 'player' && this.countPoints(player) >= 21) {
             this.resolve(deck, player)
             console.log('early resolve');
-        }        
+        }
     }
     
     getSecretCard() {
         this.secretCard = this.hand[1];
         cassino.hideCard()
+        console.log('secret called');
     }
     
     countPoints(player) {
@@ -118,7 +121,7 @@ class Dealer {
         const playerTotal = this.countPoints(player);
         
         if (playerTotal === 21) {
-            this.countPoints(this) === 21 ? console.log('push') : player.win();
+            this.countPoints(this) === 21 ? player.push() : player.blackjack();
         } else if (playerTotal > 21) {
             player.bust();
         } else {
@@ -127,15 +130,17 @@ class Dealer {
             // console.log('inside resolve ====> ', 'dealer total => ', dealerTotal, 'player total => ', playerTotal);
             
             if (playerTotal === dealerTotal) {
-                console.log('push');            
+                player.push();            
             } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
                 player.win()
-            } else {
-                console.log('house wins');
+            } else if (playerTotal < dealerTotal) {
+                player.lose();
             }
+
         }
+        console.log(player.cash, player.bet);
         
-        console.log(deck);
+        // console.log(deck);
     }
 
     deal(deck, players) {
@@ -155,20 +160,32 @@ class Dealer {
     }
 
     prepareTable(players) {
-        cassino.removeChips()
         cassino.discartCards(players)
         cassino.hideTotal()
 
         players.forEach(player => {
-            if (player.type === 'player') cassino.generateChips(player.getExtraChips())
+            if (player.type === 'player' && player.cash + player.bet < 1) {
+                cassino.restart()
+                return
+            } else if (player.type === 'player') {
+                cassino.generateChips(player.getExtraChips())
+            }
+
             player.hand = []
-            
+            player.canBet = true;            
         })
+        
+
+        
+
+        // cassino.listen()
+
+        // console.log(players[1], players[0].cash);
     }
 
     restore() {
         this.hand = [];
-        this.secretCard = '';
+        // this.secretCard = ;
     }
 
     start(deck, num, players) {
@@ -186,23 +203,26 @@ class Player {
         this.cash = 5000;
         this.chipsValues = [25, 50, 100, 250, 500, 1000, 5000, 10000, 100000]
         this.bet = 0;
+        this.canBet = true;
     }
 
     getExtraChips() {
         let extraChips = this.chipsValues.filter(value => {
-            return this.cash / value > 2
+            return this.cash / value >= 1
         })
         
-        return extraChips;
+        return extraChips.slice(-6);
     }
 
     makeBet(amount) {
-        if (this.cash >= amount) {
+        if (this.cash >= amount && this.canBet) {
             this.cash -= amount;
             cassino.updateCash(this.cash)
             this.bet += amount;
-        } else {
+        } else if (this.cash < amount) {
           this.clearBet();
+        } else {
+            window.alert('The bet can no longer be altered.')
         }
       
         cassino.updateBet();
@@ -211,37 +231,63 @@ class Player {
     double(deck, dealer) {
         if (this.cash >= this.bet * 2) {
           this.makeBet(this.bet);
-          console.log(this);
           dealer.hit(deck, player);
           dealer.resolve(deck, this)
         }
     }
 
     clearBet() {
+        this.cash += this.bet
         this.bet = 0;
+        cassino.generateChips(this.getExtraChips())
         cassino.updateBet();
+        cassino.updateCash(this.cash)
+    }
+
+    blackjack() {
+        // console.log('before blackjack =>', this.cash);
+        this.cash += this.bet * 1.5;
+        cassino.playerBlackjack();
+        // cassino.revealCard()
+        this.bet = 0;
+        // console.log('after blackjack =>', this.cash);
     }
 
     win() {
-        let originalBet = this.bet
-        this.cash += originalBet * 1.5;
+        // console.log('before win =>', this.cash);
+        this.cash += this.bet;
+        cassino.playerWin();
+        // this.bet = 0;
+        // console.log('after win =>', this.cash);      
+    }
+
+    loseMoney() {
+        // let originalBet = this.bet;
         this.bet = 0;
-        this.makeBet(originalBet);
-        // console.log('after win => ', 'cash = ' + this.cash, 'bet = ' + this.bet);        
+        // this.makeBet(originalBet);
     }
 
     bust() {
-        let originalBet = this.bet;
-        this.bet = 0;
-        this.makeBet(originalBet);
+        this.loseMoney();
+        cassino.playerBust();
+    }
 
-        // console.log('after loss =>', 'cash = ' + this.cash, 'bet = ' + this.bet);
+    lose() {
+        this.loseMoney();
+        cassino.playerLose();
+    }
+
+    push() {
+        cassino.push()
     }
 
     restore() {
         this.hand = [];
         this.cash = 5000;
         this.bet = 0;
+
+        cassino.updateCash(this.cash)
+        cassino.updateBet()
     }
 }
 

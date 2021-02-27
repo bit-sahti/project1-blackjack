@@ -16,6 +16,19 @@
             <button class="rules">Rules</button>
         </div>
         </div>
+        <section class="explanation hidden">
+            <p>The goal of the game is to achieve 21 or come as close as possible. If you have a 21, you will win 1.5 times the amount you have betted. If you don't have it, but you're hand is still higher than the dealer's hand, you will win the same as the betted amount.</p>
+
+            <p>After receiving your two cards, you may ask for as many as you like, but beware! If you surpass 21, you will go bust and lose the betted amount.The same will happen if the dealer's hand is closer to 21 than yours.</p> 
+            
+            <p> If both you and the dealer have the same total, it's a push. You win and lose nothing.</p>
+
+            <p>As it is costummary, the dealer must stand on a soft 17.</p>
+
+            <p>Are you ready?</p>
+
+            <button>Yes!</button>
+        </section>
     </header>
     <main class="table hidden">        
             <div class="dealer side">
@@ -34,10 +47,6 @@
                 </div>
                 <div class="bet">
                     <p></p>
-                    <div>
-                        <button class="clear hidden">Clear</button>
-                        <button class="double hidden">Double</button>
-                      </div>
                 </div>
             </div>
 
@@ -48,7 +57,24 @@
                 </div>
                 <div class="chips"></div>
             </div>        
-    </main>    
+    </main>
+    <section class="messages hidden">
+        <div class="blackjack hidden">
+            <h1>BLACKJACK!!!</h1>
+        </div>
+        <div class="win hidden">
+            <h1>You win!</h1>
+        </div>
+        <div class="lose hidden">
+            <h1>You lose!</h1>
+        </div>
+        <div class="bust hidden">
+            <h1>Busted!</h1>
+        </div>
+        <div class="push hidden">
+            <h1>Push!</h1>
+        </div>
+    </section>
 </body>
 <script src="src/main.js"></script>
 <script src="src/cassino.js"></script>
