@@ -1,10 +1,10 @@
-#Blackjack
+# Blackjack
 
-##About
+## About
 
 This game was developed with Vanilla Javascrip, CSS and HTML as the final project of Ironhack Web Development Bootcamp.
 
-##Game Rules
+## Game Rules
 
 The goal of the game is to achieve 21 or come as close as possible. If you have a 21, you will win 1.5 times the amount you have betted. If you don't have it, but you're hand is still higher than the dealer's hand, you will win the same as the betted amount.
 
