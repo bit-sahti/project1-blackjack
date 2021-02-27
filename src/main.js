@@ -108,7 +108,7 @@ class Dealer {
     }
     
     consecutiveHits(deck) {
-        while (this.countPoints(this) < 17) {
+        while (this.countPoints(this) < 18) {
             this.hit(deck, this);
             cassino.displayTotal(dealer, this.countPoints(this))
         }
@@ -125,7 +125,7 @@ class Dealer {
         } else if (playerTotal > 21) {
             player.bust();
         } else {
-            const dealerTotal = this.countPoints(this) < 17 ? this.consecutiveHits(deck) : this.countPoints(this);
+            const dealerTotal = this.countPoints(this) < 18 ? this.consecutiveHits(deck) : this.countPoints(this);
             
             // console.log('inside resolve ====> ', 'dealer total => ', dealerTotal, 'player total => ', playerTotal);
             
